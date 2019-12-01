@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.902
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aqwas.Web", "Aqwas.Web\Aqwas.Web.csproj", "{77C0CAB4-4B77-4402-AE7D-ABB3927F63CA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aqwas.API", "Aqwas.API\Aqwas.API.csproj", "{8D6BA79E-18AD-4C89-BBB2-4C1168BFA974}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{77C0CAB4-4B77-4402-AE7D-ABB3927F63CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77C0CAB4-4B77-4402-AE7D-ABB3927F63CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77C0CAB4-4B77-4402-AE7D-ABB3927F63CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77C0CAB4-4B77-4402-AE7D-ABB3927F63CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D6BA79E-18AD-4C89-BBB2-4C1168BFA974}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D6BA79E-18AD-4C89-BBB2-4C1168BFA974}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D6BA79E-18AD-4C89-BBB2-4C1168BFA974}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D6BA79E-18AD-4C89-BBB2-4C1168BFA974}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {550D66D9-2A33-4AD5-AD76-1583E192478A}
+	EndGlobalSection
+EndGlobal

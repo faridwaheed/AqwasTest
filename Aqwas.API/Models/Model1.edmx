@@ -1,0 +1,305 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="AqwasModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="250" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Feeds">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Link" Type="nvarchar(max)" />
+          <Property Name="CategoryId" Type="int" Nullable="false" />
+          <Property Name="FeedDate" Type="date" />
+          <Property Name="IsSubscribed" Type="bit" />
+        </EntityType>
+        <EntityType Name="UserFeeds">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="FeedId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <Association Name="FK__UserFeeds__FeedI__5070F446">
+          <End Role="Feeds" Type="Self.Feeds" Multiplicity="1" />
+          <End Role="UserFeeds" Type="Self.UserFeeds" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Feeds">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserFeeds">
+              <PropertyRef Name="FeedId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserFeeds__UserI__4F7CD00D">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="UserFeeds" Type="Self.UserFeeds" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserFeeds">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKCategory">
+          <End Role="Category" Type="Self.Category" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Feeds" Type="Self.Feeds" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Feeds">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="GetUserFeeds" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SubscribedUserFeeds" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userId" Type="int" Mode="In" />
+          <Parameter Name="feedId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="UpdateFeedsToBeSubscribed" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="AqwasModelStoreContainer">
+          <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Feeds" EntityType="Self.Feeds" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserFeeds" EntityType="Self.UserFeeds" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__UserFeeds__FeedI__5070F446" Association="Self.FK__UserFeeds__FeedI__5070F446">
+            <End Role="Feeds" EntitySet="Feeds" />
+            <End Role="UserFeeds" EntitySet="UserFeeds" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserFeeds__UserI__4F7CD00D" Association="Self.FK__UserFeeds__UserI__4F7CD00D">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserFeeds" EntitySet="UserFeeds" />
+          </AssociationSet>
+          <AssociationSet Name="FKCategory" Association="Self.FKCategory">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Feeds" EntitySet="Feeds" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AqwasModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Feeds" Relationship="Self.FKCategory" FromRole="Category" ToRole="Feeds" />
+        </EntityType>
+        <EntityType Name="Feed">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Link" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
+          <Property Name="FeedDate" Type="DateTime" Precision="0" />
+          <Property Name="IsSubscribed" Type="Boolean" />
+          <NavigationProperty Name="Category" Relationship="Self.FKCategory" FromRole="Feeds" ToRole="Category" />
+          <NavigationProperty Name="UserFeeds" Relationship="Self.FK__UserFeeds__FeedI__5070F446" FromRole="Feeds" ToRole="UserFeeds" />
+        </EntityType>
+        <EntityType Name="UserFeed">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="FeedId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Feed" Relationship="Self.FK__UserFeeds__FeedI__5070F446" FromRole="UserFeeds" ToRole="Feeds" />
+          <NavigationProperty Name="User" Relationship="Self.FK__UserFeeds__UserI__4F7CD00D" FromRole="UserFeeds" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Email" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Username" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="UserFeeds" Relationship="Self.FK__UserFeeds__UserI__4F7CD00D" FromRole="Users" ToRole="UserFeeds" />
+        </EntityType>
+        <Association Name="FKCategory">
+          <End Role="Category" Type="Self.Category" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Feeds" Type="Self.Feed" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Feeds">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserFeeds__FeedI__5070F446">
+          <End Role="Feeds" Type="Self.Feed" Multiplicity="1" />
+          <End Role="UserFeeds" Type="Self.UserFeed" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Feeds">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserFeeds">
+              <PropertyRef Name="FeedId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserFeeds__UserI__4F7CD00D">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="UserFeeds" Type="Self.UserFeed" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserFeeds">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AqwasEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Categories" EntityType="Self.Category" />
+          <EntitySet Name="Feeds" EntityType="Self.Feed" />
+          <EntitySet Name="UserFeeds" EntityType="Self.UserFeed" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FKCategory" Association="Self.FKCategory">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="Feeds" EntitySet="Feeds" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserFeeds__FeedI__5070F446" Association="Self.FK__UserFeeds__FeedI__5070F446">
+            <End Role="Feeds" EntitySet="Feeds" />
+            <End Role="UserFeeds" EntitySet="UserFeeds" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserFeeds__UserI__4F7CD00D" Association="Self.FK__UserFeeds__UserI__4F7CD00D">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserFeeds" EntitySet="UserFeeds" />
+          </AssociationSet>
+          <FunctionImport Name="GetUserFeeds" ReturnType="Collection(AqwasModel.GetUserFeeds_Result)">
+            <Parameter Name="userId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SubscribedUserFeeds">
+            <Parameter Name="userId" Mode="In" Type="Int32" />
+            <Parameter Name="feedId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateFeedsToBeSubscribed">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="GetUserFeeds_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="150" />
+          <Property Type="DateTime" Name="FeedDate" Nullable="true" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AqwasModelStoreContainer" CdmEntityContainer="AqwasEntities">
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="AqwasModel.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Feeds">
+            <EntityTypeMapping TypeName="AqwasModel.Feed">
+              <MappingFragment StoreEntitySet="Feeds">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Link" ColumnName="Link" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="FeedDate" ColumnName="FeedDate" />
+                <ScalarProperty Name="IsSubscribed" ColumnName="IsSubscribed" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserFeeds">
+            <EntityTypeMapping TypeName="AqwasModel.UserFeed">
+              <MappingFragment StoreEntitySet="UserFeeds">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="FeedId" ColumnName="FeedId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="AqwasModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetUserFeeds" FunctionName="AqwasModel.Store.GetUserFeeds">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AqwasModel.GetUserFeeds_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="FeedDate" ColumnName="FeedDate" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SubscribedUserFeeds" FunctionName="AqwasModel.Store.SubscribedUserFeeds" />
+          <FunctionImportMapping FunctionImportName="UpdateFeedsToBeSubscribed" FunctionName="AqwasModel.Store.UpdateFeedsToBeSubscribed" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

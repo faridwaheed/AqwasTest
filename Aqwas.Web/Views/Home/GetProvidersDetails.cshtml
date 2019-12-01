@@ -1,0 +1,69 @@
+﻿@model IEnumerable<Aqwas.Web.Models.Item>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style type="text/css">
+    .table-fixed thead {
+        width: 97%;
+    }
+
+    .table-fixed tbody {
+        height: 230px;
+        overflow-y: auto;
+        width: 100%;
+    }
+
+    .table-fixed thead, .table-fixed tbody, .table-fixed tr, .table-fixed td, .table-fixed th {
+        display: block;
+    }
+
+        .table-fixed tbody td, .table-fixed thead > tr > th {
+            float: left;
+            border-bottom-width: 0;
+        }
+</style>
+
+<h3>
+    @Html.ActionLink("BackToMyFeeds", "GetMyFeeds")
+</h3>
+@using (Html.BeginForm("GetProvidersDetails", "Home", FormMethod.Get))
+{
+<div class="row">
+    <input type="text" class=" col-md-4 form-control" id="search" name="search" />
+
+    <button type="submit" class="col-md-2 btn btn-primary">Search</button>
+</div>
+}
+<input type="hidden" value="@ViewBag.Id" id="PId" />
+<table class="table" id="tab">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.Raw(item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+        </tr>
+    }
+
+</table>
